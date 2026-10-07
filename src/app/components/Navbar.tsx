@@ -1,6 +1,7 @@
 import { Button } from '@heroui/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import NavLinks from './NavLinks';
 
 
 const Navbar = () => {
@@ -31,6 +32,9 @@ const Navbar = () => {
                 </div>
             </div>
             {/* Categor */}
+            <div>
+                <NavLinks></NavLinks>
+            </div>
         </div>
     );
 };
