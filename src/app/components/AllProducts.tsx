@@ -33,7 +33,7 @@ const arrow = { up: '▲', down: '▼', flat: '–' };
 
 const AllProducts = ({ data }: { data: ChangeType[] }) => {
     return (
-        <div>
+        <div className='pb-10'>
             <h2 className="text-lg font-semibold mb-4">সব পণ্য</h2>
             <p className="pb-4">মোট {bn(data.length)}টি পণ্য দেখানো হচ্ছে</p>
 

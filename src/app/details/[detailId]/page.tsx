@@ -25,7 +25,9 @@ interface MarketPrice {
 
 interface ItemDetails {
     id: number,
+    slug:string,
     nameBn: string,
+    category:string,
     categoryBn:string,
     categoryNameBn: string,
     image: string,
@@ -66,16 +68,16 @@ export default async function DetailsPage({
     return (
         <main className="mx-auto max-w-7xl px-4 py-6">
             {/* breadcrumb */}
-            <nav className="mb-4 flex items-center gap-2 text-xs text-gray-600">
+            <nav className="mb-4 flex items-center gap-2 text-sm text-gray-600">
                 <Link href="/" className="hover:underline">
                     হোম
                 </Link>
                 <span>›</span>
-                <Link href="/" className="hover:underline">
+                <Link href={`/category/${item.category}`} className="hover:underline">
                     {item.categoryNameBn}
                 </Link>
                 <span>›</span>
-                <span className="text-gray-900">{item.nameBn}</span>
+                <span className="text-gray-900 font-medium">{item.nameBn}</span>
             </nav>
 
             {/* header card */}

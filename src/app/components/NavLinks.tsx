@@ -1,5 +1,8 @@
+
 import Link from 'next/link';
+
 import React from 'react';
+import LinkItem from './LinkItem';
 interface categoryType {
     id: string,
     slug:string,
@@ -12,16 +15,17 @@ const NavLinks = async() => {
     const data:categoryType[] = await res.json();
     console.log(data);
     
+    
     return (
-        <div className='flex gap-5 max-w-7xl mx-auto py-3'>
-            {
-                data.map(n => <Link  key={n.id} href={`/category/${n.slug}`}>
-                    <div className='flex items-center gap-1 hover:text-[#047F39] px-2'>
-                        <p>{n.icon}</p>
-                    <h2 className='text-sm font-semibold'>{n.nameBn}</h2>
-                    </div>
-                </Link>)
-            }
+        <div className='flex gap-2 max-w-7xl mx-auto py-3 overflow-x-auto px-4'>
+            {data.map((n) => (
+                <LinkItem 
+                    key={n.id} 
+                    slug={n.slug} 
+                    icon={n.icon} 
+                    nameBn={n.nameBn} 
+                />
+            ))}
         </div>
     );
 };
