@@ -35,13 +35,14 @@ const PriceSection = ({ title, items, dir }: {title:string,items:itemsType[],dir
         </span>
         {title}
       </h2>
-<Link href='/'>
+<Link href=''>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {items.map((item) => (
-          <div
+          <Link
             key={item.id}
             className="rounded-xl border bg-white/70 p-4"
+            href={`/details/${item.id}`}
           >
             {/* top: icon + name */}
             <div className="flex items-center gap-3">
@@ -71,7 +72,7 @@ const PriceSection = ({ title, items, dir }: {title:string,items:itemsType[],dir
                 {isUp ? '▲' : '▼'} {bn(Math.abs(item.change.pct), 1)}%
               </span>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 </Link>

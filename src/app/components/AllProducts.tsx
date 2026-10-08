@@ -44,7 +44,7 @@ const AllProducts = ({ data }: { data: ChangeType[] }) => {
                     return (
                         <Link
                             key={item.id}
-                            href={`/products/${item.slug}`}
+                            href={`/details/${item.id}`}
                             className="rounded-xl border bg-white/70 p-4 block"
                         >
                             {/* top: icon + name */}

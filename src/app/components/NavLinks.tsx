@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 interface categoryType {
     id: string,
-    
+    slug:string,
     nameBn: string,
     icon: string
 }
@@ -15,7 +15,7 @@ const NavLinks = async() => {
     return (
         <div className='flex gap-5 max-w-7xl mx-auto py-3'>
             {
-                data.map(n => <Link  key={n.id} href={"/"}>
+                data.map(n => <Link  key={n.id} href={`/category/${n.slug}`}>
                     <div className='flex items-center gap-1 hover:text-[#047F39] px-2'>
                         <p>{n.icon}</p>
                     <h2 className='text-sm font-semibold'>{n.nameBn}</h2>
