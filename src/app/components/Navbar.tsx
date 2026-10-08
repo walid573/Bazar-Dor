@@ -9,9 +9,9 @@ const Navbar = () => {
     const date = new Date().toLocaleDateString("bn-BD", { dateStyle: "full" });
 
     return (
-        <div>
+        <div className='bg-white'>
             {/* Main Nav  */}
-            <div className='max-w-6xl mx-auto flex justify-between items-center py-3'>
+            <div className='max-w-7xl mx-auto flex justify-between items-center py-3'>
                 {/* Left section */}
                 <Link href='/'>
 

@@ -13,7 +13,7 @@ const NavLinks = async() => {
     console.log(data);
     
     return (
-        <div className='flex gap-5 max-w-6xl mx-auto py-3'>
+        <div className='flex gap-5 max-w-7xl mx-auto py-3'>
             {
                 data.map(n => <Link  key={n.id} href={"/"}>
                     <div className='flex items-center gap-1 hover:text-[#047F39] px-2'>
