@@ -29,10 +29,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 
       {children}
         </main>
-        <div className="max-w-7xl mx-auto">
+       
 
         <Footer></Footer>
-        </div>
+     
       </body>
     </html>
   );
