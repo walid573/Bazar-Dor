@@ -1,6 +1,7 @@
-import AllProducts from './AllProducts';
+import AllProducts from "./AllProducts";
+import PriceSection from "./PriceSection";
 
-import PriceSection from './PriceSection';
+
 
 interface changeType{
     id: number;

@@ -33,13 +33,13 @@ const arrow = { up: '▲', down: '▼', flat: '–' };
 
 const AllProducts = ({ data }: { data: ChangeType[] }) => {
     return (
-        <div className='pb-10'>
+        <div className='pb-10 scroll-mt-10 transition-all' id="all-product">
             <h2 className="text-lg font-semibold mb-4">সব পণ্য</h2>
             <p className="pb-4">মোট {bn(data.length)}টি পণ্য দেখানো হচ্ছে</p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {data.map((item) => {
-                    const dir = item.change.dir; // per item
+                    const dir = item.change.dir; 
 
                     return (
                         <Link
@@ -47,7 +47,7 @@ const AllProducts = ({ data }: { data: ChangeType[] }) => {
                             href={`/details/${item.id}`}
                             className="rounded-xl border bg-white/70 p-4 block"
                         >
-                            {/* top: icon + name */}
+                         
                             <div className="flex items-center gap-3">
                                 <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gray-100 text-2xl">
                                     {item.image}
@@ -60,7 +60,7 @@ const AllProducts = ({ data }: { data: ChangeType[] }) => {
                                 </div>
                             </div>
 
-                            {/* bottom: price + badge */}
+                           
                             <div className="mt-4 flex items-end justify-between">
                                 <div>
                                     <p className="text-xs text-gray-500">আজকের দাম</p>

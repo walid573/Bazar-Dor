@@ -1,8 +1,5 @@
+import LinkItem from "./LinkItem";
 
-import Link from 'next/link';
-
-import React from 'react';
-import LinkItem from './LinkItem';
 interface categoryType {
     id: string,
     slug:string,
@@ -11,14 +8,17 @@ interface categoryType {
 }
 
 const NavLinks = async() => {
-    const res = await fetch('https://api.api-store.workers.dev/api/bazardor/categories');
+    const res = await fetch('https://api.abcz.workers.dev/api/bazardor/categories');
     const data:categoryType[] = await res.json();
+ 
     console.log(data);
     
     
     return (
         <div className='flex gap-2 max-w-7xl mx-auto py-3 overflow-x-auto px-4'>
             {data.map((n) => (
+               
+             
                 <LinkItem 
                     key={n.id} 
                     slug={n.slug} 

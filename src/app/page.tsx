@@ -1,5 +1,6 @@
 import Banner from "./components/Banner";
-import PriceChange from "./components/PriceChange";
+import PriceChange from "./components/PriceUpadateSection/PriceChange";
+
 
 
 

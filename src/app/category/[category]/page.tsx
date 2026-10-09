@@ -40,7 +40,7 @@ const bn = (num: number, digits = 0) =>
 async function getCategoryProducts(
     category: string
 ): Promise<Product[]> {
-    const url = `https://api.api-store.workers.dev/api/bazardor/products?category=${category}`;
+    const url = `https://api.abcz.workers.dev/api/bazardor/products?category=${category}`;
 
     const res = await fetch(url, {
         cache: "no-store",

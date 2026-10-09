@@ -42,7 +42,7 @@ interface ItemDetails {
 
 
 async function getItem(id: string): Promise<ItemDetails | null> {
-    const url = `https://api.api-store.workers.dev/api/bazardor/products/${id}`;
+    const url = `https://api.abcz.workers.dev/api/bazardor/products/${id}`;
     const res = await fetch(url, { cache: "no-store" });
     console.log("URL:", url, "STATUS:", res.status);
 
@@ -156,7 +156,7 @@ export default async function DetailsPage({
                         </thead>
                         <tbody>
                             {item.markets.map((m) => (
-                                <tr key={m.market} className="border-t even:bg-gray-50/70">
+                                <tr key={m.market} className="border-t border-black even:bg-gray-50/70">
                                     <td className="px-4 py-3 font-medium">{m.market}</td>
                                     <td className="px-4 py-3 text-gray-600">{m.division}</td>
                                     <td className="px-4 py-3 text-right text-gray-600">

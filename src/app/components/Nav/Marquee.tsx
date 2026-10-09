@@ -24,11 +24,11 @@ const bn = (num:number, digits = 0) =>
   Number(num).toLocaleString('bn-BD', { maximumFractionDigits: digits });
 
 const Marquee = async() => {
-    const res = await fetch('https://api.api-store.workers.dev/api/bazardor/products');
+    const res = await fetch('https://api.abcz.workers.dev/api/bazardor/products');
     const data:marType[] = await res.json()
     return (
         <div className='flex overflow-x-auto mt-5 border-y border-gray-100'>
-             <MarqueeText direction='right' duration={20}>
+             <MarqueeText direction='right' duration={30}>
         {
             data.map(mar => <Link key={mar.id} href={`/details/${mar.id}`}>
             <div  className='flex items-center gap-2 whitespace-nowrap px-6 py-3 border border-gray-100 last:border-r-0'>
