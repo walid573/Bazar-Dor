@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Card, Form, Input, Label, TextField } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
+import UserProfile from "./loading";
 
 export default function ProfilePage() {
     const router = useRouter();
@@ -14,7 +15,9 @@ export default function ProfilePage() {
         if (!isPending && !session) router.replace("/sign-in");
     }, [isPending, session, router]);
 
-    if (!session) return <p className="p-10 text-center">লোড হচ্ছে...</p>;
+    if (isPending || !session) {
+        return <UserProfile />;
+    }
 
     const { name, email, image } = session.user;
 
@@ -38,7 +41,7 @@ export default function ProfilePage() {
             </p>
 
          
-            <Card className="mb-4 flex-row items-center justify-between rounded-xl border border-gray-200/70 p-5">
+            <Card className="mb-4 lg:flex-row  lg:items-center justify-between rounded-xl border border-gray-200/70 p-5">
                 <div className="flex items-center gap-4">
                     {image ? (
                         // eslint-disable-next-line @next/next/no-img-element
@@ -59,7 +62,7 @@ export default function ProfilePage() {
                     </div>
                 </div>
 
-                <Button variant="outline" onPress={handleSignOut} className="text-[#D03739] border border-[#D03739] rounded-lg px-4.5 py-2.5">
+                <Button variant="outline" onPress={handleSignOut} className="text-[#D03739]   border border-[#D03739] rounded-lg px-4.5 py-2.5">
                     ↩ সাইন আউট
                 </Button>
             </Card>

@@ -1,10 +1,12 @@
-import { Button } from '@heroui/react';
+
 import Image from 'next/image';
 
 import Link from 'next/link';
 import Marquee from './Marquee';
 import AuthMenu from './AuthMenu';
 import NavLinks from './NavLinks';
+import { Suspense } from 'react';
+import MarqueeSkeleton from './MarqueeSkeleton';
 
 
 const Navbar = () => {
@@ -14,7 +16,7 @@ const Navbar = () => {
     return (
         <div className='bg-white'>
             {/* Main Nav  */}
-            <div className='max-w-7xl mx-auto flex justify-between items-center py-3'>
+            <div className='max-w-2xl md:max-w-4xl lg:max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-0 py-3'>
                 {/* Left section */}
                 <Link href='/'>
 
@@ -39,7 +41,9 @@ const Navbar = () => {
                 <NavLinks></NavLinks>
             </div>
             <div>
-                <Marquee></Marquee>
+               <Suspense fallback={<MarqueeSkeleton />}>
+        <Marquee />
+      </Suspense>
             </div>
         </div>
     );

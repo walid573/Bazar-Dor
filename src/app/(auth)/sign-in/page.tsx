@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Hind_Siliguri } from "next/font/google";
+import { useRouter } from "next/navigation";
+
 import {
     Button,
     FieldError,
@@ -13,15 +14,12 @@ import {
     TextField,
 } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
 
-const bangla = Hind_Siliguri({
-    subsets: ["bengali", "latin"],
-    weight: ["400", "500", "600", "700"],
-});
+
 
 const fieldInput =
     "rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm shadow-none placeholder:text-gray-500";
+
 const fieldLabel = "mb-1 text-sm font-medium text-gray-900";
 
 function GoogleIcon() {
@@ -58,58 +56,105 @@ function GitHubIcon() {
     );
 }
 
-const handleGoogleSignIn = async () => {
-    const data = await authClient.signIn.social({
-        provider: "google",
-    });
-    console.log(data);
-
-}
-const handleGithubSignIn = async () => {
-    const data = await authClient.signIn.social({
-        provider: "github"
-    })
-    console.log(data);
-
-}
-
-
 export default function SignInPage() {
+    const router = useRouter();
     const [submitting, setSubmitting] = useState(false);
+
+    async function handleGoogleSignIn() {
+        try {
+            setSubmitting(true);
+
+            await authClient.signIn.social({
+                provider: "google",
+                callbackURL: "/",
+            });
+        } catch (error) {
+            console.error(error);
+            setSubmitting(false);
+        }
+    }
+
+    async function handleGithubSignIn() {
+        try {
+            setSubmitting(true);
+
+            await authClient.signIn.social({
+                provider: "github",
+                callbackURL: "/",
+            });
+        } catch (error) {
+            console.error(error);
+            setSubmitting(false);
+        }
+    }
 
     async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        const users = Object.fromEntries(new FormData(e.currentTarget)) as { email: string, password: string };
-        const { data, error } = await authClient.signIn.email({
-            ...users,
-        })
-        if (data) {
-            console.log(data);
-            redirect('/')
 
-        }
-        if (error) {
-            console.log(error);
+        setSubmitting(true);
 
+        const users = Object.fromEntries(
+            new FormData(e.currentTarget)
+        ) as {
+            email: string;
+            password: string;
+        };
+
+        try {
+            const { data, error } = await authClient.signIn.email({
+                email: users.email,
+                password: users.password,
+            });
+
+            if (error) {
+                console.error(error);
+                return;
+            }
+
+            if (data) {
+                console.log(data);
+                router.push("/");
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setSubmitting(false);
         }
     }
 
     return (
-        <main
-            className={`${bangla.className} flex min-h-[72vh] flex-col items-center  px-4 py-10`}
-        >
+        <main className="flex min-h-[72vh] flex-col items-center px-4 py-10">
             <header className="mb-6 text-center">
-                <h1 className="text-3xl font-bold text-gray-900">সাইন ইন</h1>
+                <h1 className="text-3xl font-bold text-gray-900">
+                    সাইন ইন
+                </h1>
+
                 <p className="mt-1 text-sm text-gray-600">
                     বিস্তারিত দাম, বাজার তুলনা ও প্রোফাইল দেখতে অ্যাকাউন্টে ঢুকুন।
                 </p>
             </header>
 
-            <section className="bg-white max-w-103.5 mx-auto py-5 px-8 border border-gray-200 rounded-xl">
-                <Form onSubmit={onSubmit} className="flex flex-col gap-4">
-                    <TextField name="email" type="email" isRequired fullWidth>
-                        <Label className={fieldLabel}>ইমেইল</Label>
-                        <Input className={fieldInput} placeholder="you@example.com" />
+            <section className="mx-auto w-full max-w-103.5 rounded-xl border border-gray-200 bg-white px-8 py-5">
+                <Form
+                    onSubmit={onSubmit}
+                    className="flex flex-col gap-4"
+                >
+                    <TextField
+                        name="email"
+                        type="email"
+                        isRequired
+                        fullWidth
+                    >
+                        <Label className={fieldLabel}>
+                            ইমেইল
+                        </Label>
+
+                        <Input
+                            className={fieldInput}
+                            placeholder="you@example.com"
+                            aria-label="ইমেইল"
+                        />
+
                         <FieldError />
                     </TextField>
 
@@ -120,8 +165,16 @@ export default function SignInPage() {
                         fullWidth
                         minLength={8}
                     >
-                        <Label className={fieldLabel}>পাসওয়ার্ড</Label>
-                        <Input className={fieldInput} placeholder="কমপক্ষে ৮ অক্ষর" />
+                        <Label className={fieldLabel}>
+                            পাসওয়ার্ড
+                        </Label>
+
+                        <Input
+                            className={fieldInput}
+                            placeholder="কমপক্ষে ৮ অক্ষর"
+                            aria-label="পাসওয়ার্ড"
+                        />
+
                         <FieldError />
                     </TextField>
 
@@ -135,41 +188,59 @@ export default function SignInPage() {
 
                     <div className="flex items-center gap-3">
                         <Separator className="flex-1" />
-                        <span className="text-xs text-gray-500">অথবা</span>
+
+                        <span className="text-xs text-gray-500">
+                            অথবা
+                        </span>
+
                         <Separator className="flex-1" />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3">
+                    {/* Social buttons */}
+                    <div className="flex w-full flex-col gap-3 sm:flex-row">
                         <Button
                             type="button"
                             onPress={handleGoogleSignIn}
+                            isDisabled={submitting}
                             variant="outline"
-                            className="h-10 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-900"
+                            className="h-10 w-full min-w-0 rounded-lg border border-gray-200 bg-white px-2 text-sm font-medium text-gray-900"
+                            aria-label="Google দিয়ে চালিয়ে যান"
                         >
                             <GoogleIcon />
-                            Google দিয়ে চালিয়ে যান
+                            <span>Google দিয়ে চালিয়ে যান</span>
                         </Button>
+
                         <Button
                             type="button"
                             onPress={handleGithubSignIn}
+                            isDisabled={submitting}
                             variant="outline"
-                            className="h-10 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-900"
+                            className="h-10 w-full min-w-0 rounded-lg border border-gray-200 bg-white px-2 text-sm font-medium text-gray-900"
+                            aria-label="GitHub দিয়ে চালিয়ে যান"
                         >
                             <GitHubIcon />
-                            GitHub দিয়ে চালিয়ে যান
+                            <span>GitHub দিয়ে চালিয়ে যান</span>
                         </Button>
                     </div>
 
+                    {/* Sign Up */}
                     <p className="text-center text-sm text-gray-800">
                         অ্যাকাউন্ট নেই?{" "}
-                        <Link href="/signup" className="font-medium text-[#0a8a43] hover:underline">
+                        <Link
+                            href="/sign-up"
+                            className="font-medium text-[#0a8a43] hover:underline"
+                        >
                             সাইন আপ করুন
                         </Link>
                     </p>
                 </Form>
             </section>
 
-            <Link href="/" className="mt-6 text-sm text-gray-500 hover:text-gray-700">
+            {/* Back home */}
+            <Link
+                href="/"
+                className="mt-6 text-sm text-gray-500 hover:text-gray-700"
+            >
                 ← হোম পেজে ফিরে যান
             </Link>
         </main>

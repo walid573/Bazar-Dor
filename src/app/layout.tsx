@@ -3,8 +3,10 @@ import { Hind_Siliguri } from "next/font/google";
 import "./globals.css";
 
 import Footer from "./components/Footer";
-import NavLinks from "./components/NavLinks";
+
 import Navbar from "./components/Nav/Navbar";
+import { Suspense } from "react";
+import NavbarSkeleton from "./components/Nav/NavbarSkeleton";
 
 
 const hindSiliguri = Hind_Siliguri({
@@ -27,8 +29,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-theme="light"
       className={`${hindSiliguri.className} h-full antialiased`}
     >
-      <body className="min-h-full  bg-[#F0FFF0]/50 " >
+      <body className="min-h-full   bg-[#F0FFF0]/50 " >
+      <Suspense  fallback={<NavbarSkeleton />}>
+
         <Navbar></Navbar>
+      </Suspense>
         <main className="">
 
       {children}

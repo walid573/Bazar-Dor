@@ -77,7 +77,7 @@ export default function AuthMenu() {
                     <Dropdown.Item id="profile" textValue="আমার প্রোফাইল" className="rounded-xl">
                         <span aria-hidden="true">👤</span> আমার প্রোফাইল
                     </Dropdown.Item>
-                    <Dropdown.Item  className="text-red-500 rounded-xl" id="signout" textValue="সাইন আউট" variant="danger">
+                    <Dropdown.Item  className="text-[#D03739] rounded-xl" id="signout" textValue="সাইন আউট" variant="danger">
                         <span aria-hidden="true">↩</span> সাইন আউট
                     </Dropdown.Item>
                 </Dropdown.Menu>

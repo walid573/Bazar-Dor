@@ -28,7 +28,7 @@ const Marquee = async() => {
     const data:marType[] = await res.json()
     return (
         <div className='flex overflow-x-auto mt-5 border-y border-gray-100'>
-             <MarqueeText direction='right' duration={30}>
+             <MarqueeText direction='right' duration={20}>
         {
             data.map(mar => <Link key={mar.id} href={`/details/${mar.id}`}>
             <div  className='flex items-center gap-2 whitespace-nowrap px-6 py-3 border border-gray-100 last:border-r-0'>

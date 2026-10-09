@@ -1,23 +1,20 @@
-'use client'
+"use client";
+
 import { authClient } from "@/lib/auth-client";
 import {
-    Button,
-
-    FieldError,
-    FieldGroup,
-    Fieldset,
-    Form,
-    Input,
-    Label,
-
-    Separator,
-
-    TextField,
+  Button,
+  FieldError,
+  FieldGroup,
+  Fieldset,
+  Form,
+  Input,
+  Label,
+  Separator,
+  TextField,
 } from "@heroui/react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-
 
 function GoogleIcon() {
   return (
@@ -41,7 +38,7 @@ function GoogleIcon() {
     </svg>
   );
 }
- 
+
 function GitHubIcon() {
   return (
     <svg viewBox="0 0 24 24" className="size-4" aria-hidden="true">
@@ -54,169 +51,243 @@ function GitHubIcon() {
 }
 
 const fieldInput =
-    "rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm shadow-none placeholder:text-gray-500";
+  "rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm shadow-none placeholder:text-gray-500";
 const fieldLabel = "mb-1 text-sm font-medium text-gray-900";
 const SignUpPage = () => {
-    const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
 
-
-
-    const onSubmit =  async(e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const formData = new FormData(e.currentTarget);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { confirmPassword, ...users } = Object.fromEntries(formData.entries()) as {
-    email: string;
-    name: string;
-    password: string;
-    confirmPassword: string;
-  };
 
-   const { data, error } = await authClient.signUp.email(users);
+    const {
+      confirmPassword,
+      ...users
+    } = Object.fromEntries(formData.entries()) as {
+      email: string;
+      name: string;
+      password: string;
+      confirmPassword: string;
+    };
+
+    if (users.password !== confirmPassword) {
+      return;
+    }
+
+    const { data, error } = await authClient.signUp.email(users);
+
+    if (error) {
+      console.log(error);
+      return;
+    }
+
     if (data) {
-                console.log(data);
-                redirect('/')
-    
-            }
-            if (error) {
-                console.log(error);
-    
-            }
-    
-    
+      console.log(data);
+      router.push("/");
+    }
   };
 
-  const handleGoogleSignUp = async() => {
-     const data = await authClient.signIn.social({
-    provider: "google",
-  });
-  console.log(data);
-  
-  }
-  const handleGithubSignUp = async() => {
+  const handleGoogleSignUp = async () => {
     const data = await authClient.signIn.social({
-        provider: "github"
-    })
+      provider: "google",
+      callbackURL: "/",
+    });
+
     console.log(data);
-    
-  }
+  };
 
-    return (
-        <div className='min-h-[79vh] max-w-2xl mx-auto '>
-            <div className='text-center pt-10'>
-                <h2 className='text-[#1D271F] text-2xl font-bold'>অ্যাকাউন্ট তৈরি করুন</h2>
-                <p className='text-[#1D271F]/70 text-sm py-1'>বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।</p>
-            </div>
-            <div className="bg-white max-w-103.5 mx-auto py-5 px-8 border border-gray-200 rounded-xl">
-                <Form className="flex flex-col gap-4" onSubmit={onSubmit} >
-                    <Fieldset>
+  const handleGithubSignUp = async () => {
+    const data = await authClient.signIn.social({
+      provider: "github",
+      callbackURL: "/",
+    });
 
-                        <FieldGroup>
-                            <TextField
-                                isRequired
+    console.log(data);
+  };
 
-                                name="name"
-                                validate={(value) => {
-                                    if (value.length < 3) {
-                                        return "Name must be at least 3 characters";
-                                    }
-                                    return null;
-                                }}
-                            >
-                                <Label>নাম</Label>
-                                <Input className='border rounded-lg border-gray-200/70 py-2' placeholder="যেমন: রহিম উদ্দিন" />
-                                <FieldError />
-                            </TextField>
-                            <TextField isRequired name="email" type="email">
-                                <Label>Email</Label>
-                                <Input className='border rounded-lg border-gray-200/70 py-2' placeholder="john@example.com" />
-                                <FieldError />
-                            </TextField>
-                            <TextField
-                                name="password"
-                                type="password"
-                                isRequired
-                                fullWidth
-                                minLength={8}
-                                value={password}
-                                onChange={setPassword}
-                            >
-                                <Label className={fieldLabel}>পাসওয়ার্ড</Label>
-                                <Input className={fieldInput} placeholder="কমপক্ষে ৮ অক্ষর" />
-                                <FieldError />
-                            </TextField>
+  return (
+    <div className="min-h-[79vh] w-full px-4">
+      <div className="mx-auto w-full max-w-[414px]">
+        {/* Heading */}
+        <div className="pt-10 text-center">
+          <h2 className="text-2xl font-bold text-[#1D271F]">
+            অ্যাকাউন্ট তৈরি করুন
+          </h2>
 
-                            <TextField
-                                name="confirmPassword"
-                                type="password"
-                                isRequired
-                                fullWidth
-                                validate={(value) =>
-                                    value === password ? null : "পাসওয়ার্ড মিলছে না"
-                                }
-                            >
-                                <Label className={fieldLabel}>পাসওয়ার্ড নিশ্চিত করুন</Label>
-                                <Input className={fieldInput} placeholder="আবার লিখুন" />
-                                <FieldError />
-                            </TextField>
-                        </FieldGroup>
-                        <Button
-                            type="submit"
-
-                            className="mt-1 h-11 w-full rounded-xl bg-[#0a8a43] text-sm font-semibold text-white shadow-md hover:bg-[#087a3b]"
-                        >
-                            অ্যাকাউন্ট তৈরি করুন
-                        </Button>
-                    </Fieldset>
-                     <div className="flex items-center gap-3">
-            <Separator className="flex-1" />
-            <span className="text-xs text-gray-500">অথবা</span>
-            <Separator className="flex-1" />
-          </div>
- 
-          <div className="flex gap-2 max-w-90  justify-center items-center ">
-            <div>
-                <Button
-              type="button"
-              onPress={handleGoogleSignUp}
-              variant="outline"
-              className="h-10 rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-900"
-            >
-              <GoogleIcon />
-              Google দিয়ে চালিয়ে যান
-            </Button>
-            </div>
-            <div>
-                <Button
-              type="button"
-              onPress={handleGithubSignUp}
-              variant="outline"
-              className="h-10 rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-900"
-            >
-              <GitHubIcon />
-              GitHub দিয়ে চালিয়ে যান
-            </Button>
-            </div>
-          </div>
- 
-          <p className="text-center text-sm text-gray-800">
-            অ্যাকাউন্ট আছে?{" "}
-            <Link href="/sign-in" className="font-medium text-[#0a8a43] hover:underline">
-              সাইন ইন করুন
-            </Link>
+          <p className="py-1 text-sm text-[#1D271F]/70">
+            বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।
           </p>
-           
-                </Form>
-                
-            </div>
-            <div className="flex justify-center items-center pb-10">
-
-            <Link href="/" className="mt-6 text-sm text-center text-gray-500 hover:text-gray-700">
-        ← হোম পেজে ফিরে যান
-      </Link>
-            </div>
         </div>
-    );
+
+        {/* Form */}
+        <div className="rounded-xl border border-gray-200 bg-[#E1E8E1] px-8 py-5">
+          <Form
+            className="flex flex-col gap-4"
+            onSubmit={onSubmit}
+          >
+            <Fieldset>
+              <FieldGroup>
+                {/* Name */}
+                <TextField
+                  isRequired
+                  name="name"
+                  validate={(value) => {
+                    if (value.length < 3) {
+                      return "Name must be at least 3 characters";
+                    }
+
+                    return null;
+                  }}
+                >
+                  <Label className={fieldLabel}>
+                    নাম
+                  </Label>
+
+                  <Input
+                    className={fieldInput}
+                    placeholder="যেমন: রহিম উদ্দিন"
+                  />
+
+                  <FieldError />
+                </TextField>
+
+                {/* Email */}
+                <TextField
+                  isRequired
+                  name="email"
+                  type="email"
+                >
+                  <Label className={fieldLabel}>
+                    Email
+                  </Label>
+
+                  <Input
+                    className={fieldInput}
+                    placeholder="john@example.com"
+                  />
+
+                  <FieldError />
+                </TextField>
+
+                {/* Password */}
+                <TextField
+                  name="password"
+                  type="password"
+                  isRequired
+                  minLength={8}
+                  value={password}
+                  onChange={setPassword}
+                >
+                  <Label className={fieldLabel}>
+                    পাসওয়ার্ড
+                  </Label>
+
+                  <Input
+                    className={fieldInput}
+                    placeholder="কমপক্ষে ৮ অক্ষর"
+                  />
+
+                  <FieldError />
+                </TextField>
+
+                {/* Confirm Password */}
+                <TextField
+                  name="confirmPassword"
+                  type="password"
+                  isRequired
+                  validate={(value) =>
+                    value === password
+                      ? null
+                      : "পাসওয়ার্ড মিলছে না"
+                  }
+                >
+                  <Label className={fieldLabel}>
+                    পাসওয়ার্ড নিশ্চিত করুন
+                  </Label>
+
+                  <Input
+                    className={fieldInput}
+                    placeholder="আবার লিখুন"
+                  />
+
+                  <FieldError />
+                </TextField>
+              </FieldGroup>
+
+              {/* Submit */}
+              <Button
+                type="submit"
+                className="mt-1 h-11 w-full rounded-xl bg-[#0a8a43] text-sm font-semibold text-white shadow-md hover:bg-[#087a3b]"
+              >
+                অ্যাকাউন্ট তৈরি করুন
+              </Button>
+            </Fieldset>
+
+            {/* OR */}
+            <div className="flex items-center gap-3">
+              <Separator className="flex-1" />
+
+              <span className="text-xs text-gray-500">
+                অথবা
+              </span>
+
+              <Separator className="flex-1" />
+            </div>
+
+            {/* buttons */}
+
+            <div className="flex w-full flex-col gap-3 sm:flex-row">
+              <Button
+                type="button"
+                onPress={handleGoogleSignUp}
+                variant="outline"
+                className="h-10 w-full min-w-0 rounded-lg border border-gray-200 bg-white px-2 text-sm font-medium text-gray-900"
+                aria-label="Google দিয়ে চালিয়ে যান"
+              >
+                <GoogleIcon />
+                <span>Google দিয়ে চালিয়ে যান</span>
+              </Button>
+
+              <Button
+                type="button"
+                onPress={handleGithubSignUp}
+                variant="outline"
+                className="h-10 w-full min-w-0 rounded-lg border border-gray-200 bg-white px-2 text-sm font-medium text-gray-900"
+                aria-label="GitHub দিয়ে চালিয়ে যান"
+              >
+                <GitHubIcon />
+                <span>GitHub দিয়ে চালিয়ে যান</span>
+              </Button>
+            </div>
+
+
+            {/* Sign in */}
+            <p className="text-center text-sm text-gray-800">
+              অ্যাকাউন্ট আছে?{" "}
+              <Link
+                href="/sign-in"
+                className="font-medium text-[#0a8a43] hover:underline"
+              >
+                সাইন ইন করুন
+              </Link>
+            </p>
+          </Form>
+        </div>
+
+        {/* Back home */}
+        <div className="flex items-center justify-center pb-10">
+          <Link
+            href="/"
+            className="mt-6 text-center text-sm text-gray-500 hover:text-gray-700"
+          >
+            ← হোম পেজে ফিরে যান
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default SignUpPage;
