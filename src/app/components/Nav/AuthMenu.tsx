@@ -66,7 +66,7 @@ export default function AuthMenu() {
                 </span>
             </Button>
 
-            <Dropdown.Popover placement="bottom end" className="min-w-60"
+            <Dropdown.Popover placement="bottom end" offset={8} className="min-w-60 rounded-2xl pb-4 px-2"
             >
                 <div className="px-3 pb-2 pt-3">
                     <p className="text-sm font-semibold text-gray-900">{name}</p>
@@ -74,10 +74,10 @@ export default function AuthMenu() {
                 </div>
 
                 <Dropdown.Menu onAction={handleAction}>
-                    <Dropdown.Item id="profile" textValue="আমার প্রোফাইল">
+                    <Dropdown.Item id="profile" textValue="আমার প্রোফাইল" className="rounded-xl">
                         <span aria-hidden="true">👤</span> আমার প্রোফাইল
                     </Dropdown.Item>
-                    <Dropdown.Item className="text-red-500" id="signout" textValue="সাইন আউট" variant="danger">
+                    <Dropdown.Item  className="text-red-500 rounded-xl" id="signout" textValue="সাইন আউট" variant="danger">
                         <span aria-hidden="true">↩</span> সাইন আউট
                     </Dropdown.Item>
                 </Dropdown.Menu>

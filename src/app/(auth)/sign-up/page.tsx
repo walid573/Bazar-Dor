@@ -102,8 +102,8 @@ const SignUpPage = () => {
   }
 
     return (
-        <div className='min-h-[77vh] max-w-2xl mx-auto '>
-            <div className='text-center pt-4'>
+        <div className='min-h-[79vh] max-w-2xl mx-auto '>
+            <div className='text-center pt-10'>
                 <h2 className='text-[#1D271F] text-2xl font-bold'>অ্যাকাউন্ট তৈরি করুন</h2>
                 <p className='text-[#1D271F]/70 text-sm py-1'>বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।</p>
             </div>
@@ -205,13 +205,16 @@ const SignUpPage = () => {
               সাইন ইন করুন
             </Link>
           </p>
-           <Link href="/" className="mt-6 text-sm text-center text-gray-500 hover:text-gray-700">
-        ← হোম পেজে ফিরে যান
-      </Link>
+           
                 </Form>
                 
             </div>
-            
+            <div className="flex justify-center items-center pb-10">
+
+            <Link href="/" className="mt-6 text-sm text-center text-gray-500 hover:text-gray-700">
+        ← হোম পেজে ফিরে যান
+      </Link>
+            </div>
         </div>
     );
 };
