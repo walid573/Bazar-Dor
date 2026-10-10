@@ -206,7 +206,7 @@ export default function SignInPage() {
                     <Button
                         type="submit"
                         isPending={submitting}
-                        className="mt-1 h-11 w-full rounded-xl bg-[#0a8a43] text-sm font-semibold text-white shadow-md hover:bg-[#087a3b]"
+                        className="mt-1 h-11 w-full rounded-xl shadow-md shadow-green-600/40 bg-[#0a8a43] text-sm font-semibold text-white shadow-md hover:bg-[#087a3b]"
                     >
                         সাইন ইন
                     </Button>

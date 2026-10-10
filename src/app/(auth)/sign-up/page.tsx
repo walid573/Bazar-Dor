@@ -234,7 +234,7 @@ const SignUpPage = () => {
               {/* Submit */}
               <Button
                 type="submit"
-                className="mt-1 h-11 w-full rounded-xl bg-[#0a8a43] text-sm font-semibold text-white shadow-md hover:bg-[#087a3b]"
+                className="mt-1 h-11 w-full rounded-xl bg-[#0a8a43] text-sm font-semibold text-white shadow-md shadow-green-600/40 hover:bg-[#087a3b] "
               >
                 অ্যাকাউন্ট তৈরি করুন
               </Button>

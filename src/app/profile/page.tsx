@@ -22,42 +22,40 @@ export default function ProfilePage() {
 
     const { name, email, image } = session.user;
 
-   const handleSignOut = async () => {
-    const { error } = await authClient.signOut();
+    const handleSignOut = async () => {
+        const { error } = await authClient.signOut();
 
-    if (error) {
-        toast.error("Logout failed. Please try again.");
-        return;
-    }
+        if (error) {
+            toast.error("সাইন আউট করা যায়নি। আবার চেষ্টা করুন।");
+            return;
+        }
 
-    toast.error("You've been signed out. See you soon!", {
-        icon: "👋",
-    });
-    router.push("/");
-};
+        toast.success("সাইন আউট হয়েছে। আবার দেখা হবে!", { icon: "👋" });
+        router.push("/");
+    };
 
     const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newName = String(new FormData(e.currentTarget).get("name")).trim();
+        e.preventDefault();
+        const newName = String(new FormData(e.currentTarget).get("name")).trim();
 
-    if (!newName) {
-        toast.error("Name can't be empty.");
-        return;
-    }
+        if (!newName) {
+            toast.error("Name can't be empty.");
+            return;
+        }
 
-    const toastId = toast.loading("Updating your profile...");
+        const toastId = toast.loading("Updating your profile...");
 
-    const { error } = await authClient.updateUser({ name: newName });
+        const { error } = await authClient.updateUser({ name: newName });
 
-    if (error) {
-        toast.error(error.message || "Couldn't update your profile. Please try again.", {
-            id: toastId,
-        });
-        return;
-    }
+        if (error) {
+            toast.error(error.message || "Couldn't update your profile. Please try again.", {
+                id: toastId,
+            });
+            return;
+        }
 
-    toast.success(`Profile updated! Hi, ${newName} 👋`, { id: toastId });
-};
+        toast.success(`Profile updated! Hi, ${newName} 👋`, { id: toastId });
+    };
 
     return (
         <main className="mx-auto min-h-[70.5vh] max-w-2xl px-4 py-10">
@@ -66,7 +64,7 @@ export default function ProfilePage() {
                 আপনার অ্যাকাউন্টের তথ্য এখানে দেখুন।
             </p>
 
-         
+
             <Card className="mb-4 lg:flex-row  lg:items-center justify-between rounded-xl border border-gray-200/70 p-5">
                 <div className="flex items-center gap-4">
                     {image ? (
@@ -93,11 +91,11 @@ export default function ProfilePage() {
                 </Button>
             </Card>
 
-            
+
             <Card className="rounded-xl p-5 border border-gray-200/70">
                 <h2 className="mb-4 font-semibold text-lg">তথ্য</h2>
                 <Form onSubmit={handleUpdate} className="flex flex-col gap-4">
-                    <TextField name="name"  isRequired fullWidth>
+                    <TextField name="name" isRequired fullWidth>
                         <Label>নাম</Label>
                         <Input className='border rounded-lg border-gray-200/70 py-2' />
                     </TextField>

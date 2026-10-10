@@ -86,7 +86,7 @@ export default function NotFound() {
               <path d="M9 19v-6h6v6" />
             </svg>
 
-            হোমে ফিরে যান
+            হোম পেজে ফিরে যান
 
             <span className="text-lg">→</span>
           </Link>
