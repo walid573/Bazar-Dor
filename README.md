@@ -36,24 +36,60 @@ A modern Bengali product price comparison website built with **Next.js**, **Type
 
 ## 📁 Project Structure
 
-```text
+```
 Bazar-Dor/
 ├── public/
-│   └── ...                    # Static assets
+│   ├── bazar-hero.png              # Hero banner image
+│   └── logo.png                    # Site logo
 ├── src/
-│   ├── app/
-│   │   ├── page.tsx           # Home page
-│   │   ├── products/
-│   │   │   └── [slug]/        # Product details
-│   │   ├── signin/             # Sign in page
-│   │   ├── signup/             # Sign up page
-│   │   └── ...
-│   ├── components/             # Reusable UI components
-│   ├── lib/                    # API, authentication & utilities
-│   └── ...
-├── next.config.ts
+│   ├── proxy.ts                    # Route protection (login required)
+│   ├── lib/
+│   │   ├── auth.ts                 # BetterAuth server config
+│   │   └── auth-client.ts          # BetterAuth client
+│   └── app/
+│       ├── (auth)/
+│       │   ├── sign-in/page.tsx    # Sign in page
+│       │   └── sign-up/page.tsx    # Sign up page
+│       ├── api/
+│       │   └── auth/[...all]/route.ts   # BetterAuth API handler
+│       ├── category/
+│       │   ├── loading.tsx         # Category skeleton
+│       │   └── [category]/
+│       │       ├── page.tsx        # Category products page
+│       │       └── Sortselect.tsx  # Sort dropdown
+│       ├── details/
+│       │   └── [detailId]/page.tsx # Product details (protected)
+│       ├── profile/
+│       │   ├── loading.tsx         # Profile skeleton
+│       │   └── page.tsx            # My profile
+│       ├── components/
+│       │   ├── Nav/
+│       │   │   ├── Navbar.tsx
+│       │   │   ├── NavbarSkeleton.tsx
+│       │   │   ├── NavLinks.tsx    # Category links
+│       │   │   ├── LinkItem.tsx    # Active link highlight
+│       │   │   ├── AuthMenu.tsx    # Sign in/up or profile menu
+│       │   │   ├── Marquee.tsx     # Scrolling price ticker
+│       │   │   └── MarqueeSkeleton.tsx
+│       │   ├── PriceUpadateSection/
+│       │   │   ├── PriceChange.tsx # Fetches data, builds sections
+│       │   │   ├── PriceSection.tsx# Risers / fallers cards
+│       │   │   ├── AllProducts.tsx # All products grid
+│       │   │   └── loading.tsx     # Home skeleton
+│       │   ├── Banner.tsx          # Hero section
+│       │   ├── Footer.tsx
+│       │   └── SummaryCard.tsx     # Min / max / average price card
+│       ├── favicon.ico
+│       ├── globals.css
+│       ├── layout.tsx              # Root layout (Navbar, Footer, Toaster)
+│       └── page.tsx                # Home page
+├── .gitignore
+├── AGENTS.md
+├── eslint.config.mjs               # ESLint config
+├── next.config.ts                  # Next.js config
 ├── package.json
-├── tsconfig.json
+├── package-lock.json
+├── tsconfig.json                   # TypeScript config
 └── README.md
 ```
 
