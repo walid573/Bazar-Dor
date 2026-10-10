@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Nav/Navbar";
 import { Suspense } from "react";
 import NavbarSkeleton from "./components/Nav/NavbarSkeleton";
+import { Toaster } from "react-hot-toast";
 
 
 const hindSiliguri = Hind_Siliguri({
@@ -39,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       {children}
         </main>
        
-
+          <Toaster/>
         <Footer></Footer>
      
       </body>

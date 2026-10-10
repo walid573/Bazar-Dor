@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 function GoogleIcon() {
   return (
@@ -85,44 +86,58 @@ const SignUpPage = () => {
 
     if (data) {
       console.log(data);
+      toast.success(`Welcome, ${data?.user?.name}! Your account has been created.`)
       router.push("/");
     }
   };
 
   const handleGoogleSignUp = async () => {
-    const data = await authClient.signIn.social({
+    const toastId = toast.loading("Redirecting to Google...");
+
+    const { error } = await authClient.signIn.social({
       provider: "google",
       callbackURL: "/",
     });
 
-    console.log(data);
+    if (error) {
+      toast.error(
+        error.message || "Couldn't sign up with Google. Please try again.",
+        { id: toastId }
+      );
+    }
   };
 
   const handleGithubSignUp = async () => {
-    const data = await authClient.signIn.social({
+    const toastId = toast.loading("Redirecting to GitHub...");
+
+    const { error } = await authClient.signIn.social({
       provider: "github",
       callbackURL: "/",
     });
 
-    console.log(data);
+    if (error) {
+      toast.error(
+        error.message || "Couldn't sign up with GitHub. Please try again.",
+        { id: toastId }
+      );
+    }
   };
-
   return (
     <div className="min-h-[79vh] w-full px-4">
-      <div className="mx-auto w-full max-w-[414px]">
+      <div className="mx-auto w-full max-w-103.5">
         {/* Heading */}
         <div className="pt-10 text-center">
           <h2 className="text-2xl font-bold text-[#1D271F]">
             অ্যাকাউন্ট তৈরি করুন
           </h2>
 
-          <p className="py-1 text-sm text-[#1D271F]/70">
+          <p className="py-2 text-sm text-[#1D271F]/70">
             বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।
           </p>
         </div>
 
         {/* Form */}
-        <div className="rounded-xl border border-gray-200 bg-[#E1E8E1] px-8 py-5">
+        <div className="rounded-xl border border-gray-200 bg-white px-8 py-5">
           <Form
             className="flex flex-col gap-4"
             onSubmit={onSubmit}

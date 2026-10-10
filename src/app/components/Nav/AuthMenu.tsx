@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Avatar, Button, Dropdown, Skeleton } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 export default function AuthMenu() {
     const router = useRouter();
@@ -27,7 +28,7 @@ export default function AuthMenu() {
         return (
             <div className="flex items-center gap-2">
                 <Button className='bg-transparent text-black text-sm'><Link href='/sign-in'>সাইন ইন</Link></Button>
-                <Button className='bg-[#047F39] rounded-md py-4 '><Link href='/sign-up'>সাইন আপ</Link></Button>
+                <Button className='bg-[#047F39] shadow-md shadow-green-600/40 rounded-md py-4 '><Link href='/sign-up'>সাইন আপ</Link></Button>
             </div>
         );
     }
@@ -36,16 +37,27 @@ export default function AuthMenu() {
     const { name, email, image } = session.user;
     const initial = (name?.trim().charAt(0) || email.charAt(0)).toUpperCase();
 
-    const handleAction = async (key: React.Key) => {
-        if (key === "profile") {
-            router.push("/profile");
-        }
-        if (key === "signout") {
-            await authClient.signOut({
-                fetchOptions: { onSuccess: () => router.push("/") },
-            });
-        }
-    };
+   const handleAction = async (key: React.Key) => {
+    if (key === "profile") {
+        router.push("/profile");
+    }
+
+    if (key === "signout") {
+        await authClient.signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    toast.success("You've been signed out. See you soon!", {
+                        icon: "👋",
+                    });
+                    router.push("/");
+                },
+                onError: () => {
+                    toast.error("Logout failed. Please try again.");
+                },
+            },
+        });
+    }
+};
 
     return (
         <Dropdown>

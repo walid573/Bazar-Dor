@@ -20,6 +20,10 @@ const PriceChange = async () => {
   const res = await fetch('https://api.api-store.workers.dev/api/bazardor/products', {
     next: { revalidate: 3600 },
   });
+   if (!res.ok) {
+    throw new Error('পণ্যের তথ্য লোড করা যায়নি');
+  }
+
   const data:changeType[] = await res.json();
 
   const increased = data

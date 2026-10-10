@@ -64,7 +64,7 @@ export default async function DetailsPage({
     const diff = item.today - item.yesterday;
     const isUp = diff > 0;
     const unit = unitBn[item.unit] ?? item.unit;
-
+    const average = item.markets.reduce((s, m) => s + (Number(m.min) + Number(m.max)) / 2, 0) / item.markets.length;
     return (
         <main className="mx-auto max-w-7xl px-4 py-6">
             {/* breadcrumb */}
@@ -130,12 +130,7 @@ export default async function DetailsPage({
                         valueClass="text-red-600"
                         note="সবচেয়ে বেশি দামের বাজার"
                     />
-                    <SummaryCard
-                        label="গড় দাম"
-                        value={item.today}
-                        valueClass="text-green-700"
-                        note={`প্রতি ${unit}-এর হিসাবে`}
-                    />
+                    <SummaryCard label="গড় দাম" value={average} valueClass="text-green-700" note={`প্রতি ${unit}-এর হিসাবে`} />
                 </div>
 
                 {/* market table */}

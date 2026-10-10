@@ -15,7 +15,7 @@ const NavLinks = async() => {
     
     
     return (
-        <div className='flex gap-2 max-w-7xl mx-auto py-3 overflow-x-auto px-4'>
+        <div className='flex gap-2 max-w-7xl mx-auto py-5  overflow-x-auto px-4'>
             {data.map((n) => (
                
              

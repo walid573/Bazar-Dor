@@ -1,10 +1,7 @@
 
 
-const bn = (num: number, digits = 0) =>
-    Number(num).toLocaleString("bn-BD", {
-        minimumFractionDigits: digits,
-        maximumFractionDigits: digits,
-    });
+const bn = (num: number) =>
+    Number(num).toLocaleString("bn-BD", { maximumFractionDigits: 2 });
 
 const SummaryCard = ({
     label,

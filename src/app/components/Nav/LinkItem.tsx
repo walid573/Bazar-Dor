@@ -18,7 +18,7 @@ export default function LinkItem({ slug, icon, nameBn }: LinkItemProps) {
   return (
     <Link href={`/category/${slug}`}>
       <div
-        className={` shrink-0   whitespace-nowrap flex items-center  gap-1 px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors ${
+        className={` shrink-0   whitespace-nowrap flex items-center  gap-1 px-2 py-1  rounded-lg text-sm font-semibold transition-colors ${
           isActive
             ? 'bg-[#047F39] text-white' 
             : 'text-gray-700 hover:text-[#047F39] hover:bg-gray-100'

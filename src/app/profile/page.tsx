@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button, Card, Form, Input, Label, TextField } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
 import UserProfile from "./loading";
+import toast from "react-hot-toast";
 
 export default function ProfilePage() {
     const router = useRouter();
@@ -21,17 +22,42 @@ export default function ProfilePage() {
 
     const { name, email, image } = session.user;
 
-    const handleSignOut = async () => {
-        await authClient.signOut();
-        router.push("/");
-    };
+   const handleSignOut = async () => {
+    const { error } = await authClient.signOut();
+
+    if (error) {
+        toast.error("Logout failed. Please try again.");
+        return;
+    }
+
+    toast.error("You've been signed out. See you soon!", {
+        icon: "👋",
+    });
+    router.push("/");
+};
 
     const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const newName = String(new FormData(e.currentTarget).get("name"));
-        await authClient.updateUser({ name: newName });
-        alert("আপডেট হয়েছে");
-    };
+    e.preventDefault();
+    const newName = String(new FormData(e.currentTarget).get("name")).trim();
+
+    if (!newName) {
+        toast.error("Name can't be empty.");
+        return;
+    }
+
+    const toastId = toast.loading("Updating your profile...");
+
+    const { error } = await authClient.updateUser({ name: newName });
+
+    if (error) {
+        toast.error(error.message || "Couldn't update your profile. Please try again.", {
+            id: toastId,
+        });
+        return;
+    }
+
+    toast.success(`Profile updated! Hi, ${newName} 👋`, { id: toastId });
+};
 
     return (
         <main className="mx-auto min-h-[70.5vh] max-w-2xl px-4 py-10">

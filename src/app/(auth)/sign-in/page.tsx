@@ -14,6 +14,7 @@ import {
     TextField,
 } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 
 
@@ -60,33 +61,54 @@ export default function SignInPage() {
     const router = useRouter();
     const [submitting, setSubmitting] = useState(false);
 
-    async function handleGoogleSignIn() {
+     const handleGoogleSignIn = async() => {
+        const toastId = toast.loading("Redirecting to Google...");
+
         try {
             setSubmitting(true);
 
-            await authClient.signIn.social({
+            const { error } = await authClient.signIn.social({
                 provider: "google",
                 callbackURL: "/",
             });
+
+            if (error) {
+                toast.error(
+                    error.message || "Couldn't continue with Google. Please try again.",
+                    { id: toastId }
+                );
+                setSubmitting(false);
+            }
         } catch (error) {
             console.error(error);
+            toast.error("Something went wrong. Please try again.", { id: toastId });
             setSubmitting(false);
         }
     }
 
-    async function handleGithubSignIn() {
-        try {
-            setSubmitting(true);
+   const handleGithubSignIn = async() => {
+    const toastId = toast.loading("Redirecting to GitHub...");
 
-            await authClient.signIn.social({
-                provider: "github",
-                callbackURL: "/",
-            });
-        } catch (error) {
-            console.error(error);
+    try {
+        setSubmitting(true);
+
+        const { error } = await authClient.signIn.social({
+            provider: "github",
+            callbackURL: "/",
+        });
+
+        if (error) {
+            toast.error(
+                error.message || "Couldn't continue with GitHub. Please try again.",
+                { id: toastId }
+            );
             setSubmitting(false);
         }
+    } catch (error) {
+        toast.error("Something went wrong. Please try again.", { id: toastId });
+        setSubmitting(false);
     }
+}
 
     async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -107,16 +129,19 @@ export default function SignInPage() {
             });
 
             if (error) {
-                console.error(error);
+
+                toast.error("Incorrect email or password. Please try again.")
                 return;
             }
 
             if (data) {
-                console.log(data);
+
+                toast.success(`Welcome back, ${data?.user.name}!`)
                 router.push("/");
             }
         } catch (error) {
             console.error(error);
+            toast.error("কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।");
         } finally {
             setSubmitting(false);
         }

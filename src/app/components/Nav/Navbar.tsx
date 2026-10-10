@@ -37,7 +37,7 @@ const Navbar = () => {
                 </div>
             </div>
             {/* Categor */}
-            <div>
+            <div className='border-t border-gray-100/90'>
                 <NavLinks></NavLinks>
             </div>
             <div>

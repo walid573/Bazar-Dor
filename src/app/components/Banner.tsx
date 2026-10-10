@@ -7,11 +7,11 @@ const Banner = () => {
   }).format();
 
   return (
-    <div className="mx-auto mt-5 w-full max-w-2xl sm:max-w-4xl lg:max-w-7xl px-3 sm:mt-7 sm:px-4 lg:mt-10">
+    <div className="mx-auto mt-5 w-full max-w-2xl sm:max-w-4xl lg:max-w-7xl px-3 sm:mt-7 sm:px-0 lg:mt-10">
       <div className="grid grid-cols-1 overflow-hidden rounded-2xl border bg-white md:grid-cols-3">
 
         {/* Left Content */}
-        <div className="flex flex-col items-center px-4 py-6 text-center sm:px-6 sm:py-8 md:col-span-2 md:items-start md:px-6 md:py-10 lg:px-10">
+        <div className="flex flex-col items-center px-4 py-6 text-center sm:text-start sm:px-6 sm:py-8 md:col-span-2 md:items-start md:px-6 md:py-10 lg:px-10">
 
           {/* Date */}
           <p className="pb-3 text-sm font-medium text-[#05893E] sm:pb-4">
