@@ -2,7 +2,7 @@
 
 A modern Bengali product price comparison website built with **Next.js**, **TypeScript**, and **Tailwind CSS**. **BazarDor** helps users explore everyday products, compare prices from different sources, and quickly find useful market price information through a clean and responsive interface.
 
-**Live demo:** [Add your Vercel URL here]  
+**Live demo:** [https://bazar-dor-z.vercel.app/](https://bazar-dor-z.vercel.app/) 
 **Repository:** [https://github.com/walid573/Bazar-Dor](https://github.com/walid573/Bazar-Dor)
 
 ---
