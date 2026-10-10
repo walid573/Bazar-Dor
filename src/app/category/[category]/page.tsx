@@ -179,17 +179,17 @@ export default async function CategoryPage({
                                             </p>
 
                                             <p className="text-sm text-gray-700">
-                                                টাকা 
+                                                টাকা
                                             </p>
                                         </div>
 
                                         {/* Change */}
                                         <div
                                             className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ${isUp
-                                                    ? "bg-red-50 text-red-600"
-                                                    : isDown
-                                                        ? "bg-green-50 text-green-700"
-                                                        : "bg-gray-100 text-gray-600"
+                                                ? "bg-red-50 text-red-600"
+                                                : isDown
+                                                    ? "bg-green-50 text-green-700"
+                                                    : "bg-gray-100 text-gray-600"
                                                 }`}
                                         >
                                             {isUp

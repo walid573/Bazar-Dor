@@ -8,7 +8,7 @@ const SORTS = [
     { id: "default", label: "ডিফল্ট" },
     { id: "price-asc", label: "দাম: কম থেকে বেশি" },
     { id: "price-desc", label: "দাম: বেশি থেকে কম" },
-    { id: "change-desc", label: "সবচেয়ে বেশি পরিবর্তন" },
+    
 ];
 
 export default function SortSelect({ current }: { current: string }) {
